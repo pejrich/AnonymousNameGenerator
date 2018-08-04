@@ -1,5 +1,6 @@
 defmodule AnonymousNameGenerator.MixProject do
   use Mix.Project
+  @github_url "https://github.com/pejrich/AnonymousNameGenerator"
 
   def project do
     [
@@ -8,9 +9,20 @@ defmodule AnonymousNameGenerator.MixProject do
       elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      description: "Create Heroku-like names."
+      description: "Create Heroku-like names.",
+      source_url: @github_url,
+      homepage_url: @github_url,
+      files: ~w(mix.exs lib LICENSE.md README.md CHANGELOG.md),
+      package: [
+        maintainers: ["Peter Richards"],
+        licenses: ["MIT"],
+        links: %{
+          "GitHub" => @github_url,
+        }
+      ]
     ]
   end
+end
 
   # Run "mix help compile.app" to learn about applications.
   def application do
