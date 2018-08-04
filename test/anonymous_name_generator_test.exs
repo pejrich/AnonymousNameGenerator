@@ -5,23 +5,27 @@ defmodule AnonymousNameGeneratorTest do
   alias AnonymousNameGenerator, as: ANG
 
   test "generate_random/0" do
-    randoms = for i <- 1..10 do
-      ANG.generate_random
-    end
+    randoms = for i <- 1..10, do: ANG.generate_random
     assert Enum.uniq(randoms) |> length == 10
   end
 
   test "generate_random/1" do
+    # Should add two extra numbers
     default_plus_two = default_num_possibilities * 10 * 10
     result = ANG.generate_random(default_plus_two)
     |> String.split("-")
     |> List.last
     assert result |> String.length == 2
-
+    # Should add 3 extra numbers
     result = ANG.generate_random(default_plus_two + 1)
     |> String.split("-")
     |> List.last
     assert result |> String.length == 3
+    # Should add no extra numbers, because default already covers the possibilities needed
+    result = ANG.generate_random(10)
+    |> String.split("-")
+    |> length
+    assert result == 2
   end
 
   test "generate_consistent/2" do
@@ -54,7 +58,8 @@ defmodule AnonymousNameGeneratorTest do
   # end
 
   test "numbers_needed_to_get_possibilities/1" do
-
+    assert ANG.numbers_needed_to_get_possibilities(10) == 0
+    assert ANG.numbers_needed_to_get_possibilities(0) == 0
     assert ANG.numbers_needed_to_get_possibilities(default_num_possibilities * 10 * 10) == 2
     assert ANG.numbers_needed_to_get_possibilities((default_num_possibilities * 10 * 10) + 1) == 3
   end
@@ -79,13 +84,9 @@ defmodule AnonymousNameGeneratorTest do
     billi = ANG.get_consistent_numbers_for(4, 6, 1_000_000_000) == "0406308"
   end
 
-#get_random_numbers_for/1
-#numbers_needed_to_get_possibilities/1
-#get_consistent_numbers_for/3
   defp default_num_possibilities do
     adjectives = ANG.Adjective.adjectives |> length
     nouns = ANG.Noun.nouns |> length
     adjectives * nouns
   end
-
 end

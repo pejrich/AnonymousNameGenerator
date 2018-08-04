@@ -24,15 +24,6 @@ defmodule AnonymousNameGenerator do
   
   @default_num_possibilities @adjective_count * @noun_count
 
-  # def multi_adj(adjective_count \\ 2) do
-  #   adjs = (1..adjective_count)
-  #   |> Enum.map(fn(_) -> 
-  #     Enum.random(@adjectives)
-  #   end)
-  #   |> Enum.join("-")
-  #   adjs <> "-" <> Enum.random(@nouns)
-  # end
-
   @doc """
     This will create a new unique name on each call.
     By default, the number of possibilities are:
@@ -51,13 +42,17 @@ defmodule AnonymousNameGenerator do
     adj <> "-" <> noun
   end
   def generate_random(num_possibilities) when is_integer(num_possibilities) do
-    generate_random <> "-" <> get_random_numbers_for(num_possibilities)
+    nums = get_random_numbers_for(num_possibilities)
+    case nums do
+      nil -> generate_random
+      numbers -> generate_random <> "-" <> numbers
+    end
   end
 
   @doc """
     This will always return the same result if the same params are passed.
     This can be used for giving the same name to a user
-    For example __MODULE__.generate_consistent(user.id, user.inserted_at_unix))
+    For example __MODULE__.generate_consistent(user.id, user.inserted_at_unix_timestamp))
   """
   def generate_consistent(a, b, num_possibilities \\ nil)
   def generate_consistent(a, b, nil) when is_integer(a) and is_integer(b) do
@@ -72,11 +67,15 @@ defmodule AnonymousNameGenerator do
   end
 
   def get_random_numbers_for(num_possibilities) do
-    1..numbers_needed_to_get_possibilities(num_possibilities)
-    |> Enum.map(fn(_) -> :rand.uniform(10) - 1 end)
-    |> Enum.join("")
+    needed = numbers_needed_to_get_possibilities(num_possibilities)
+    if needed > 0 do
+      1..numbers_needed_to_get_possibilities(num_possibilities)
+      |> Enum.map(fn(_) -> :rand.uniform(10) - 1 end)
+      |> Enum.join("")
+    end
   end
 
+  def numbers_needed_to_get_possibilities(num) when num <= @default_num_possibilities, do: 0
   def numbers_needed_to_get_possibilities(num) do
     :math.log10(num / @default_num_possibilities) 
     |> Float.ceil
