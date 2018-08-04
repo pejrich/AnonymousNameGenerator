@@ -45,6 +45,7 @@ defmodule AnonymousNameGenerator do
         => "spicy-snowflake-5"
         
   """
+  @spec generate_random(integer | nil) :: String.t
   def generate_random(num_possibilities \\ nil)
   def generate_random(nil) do
     adj = Enum.random(@adjectives)
@@ -73,6 +74,7 @@ defmodule AnonymousNameGenerator do
         generate_consistent(10, 11, 2_000_000)
         => "hidden-ghost-18"
   """
+  @spec generate_consistent(integer, integer, integer | nil) :: String.t
   def generate_consistent(a, b, num_possibilities \\ nil)
   def generate_consistent(a, b, nil) when is_integer(a) and is_integer(b) do
     adj = Enum.at(@adjectives, :erlang.phash2(a, @adjective_count))
@@ -85,6 +87,7 @@ defmodule AnonymousNameGenerator do
     prefix <> "-" <> suffix
   end
 
+  @spec get_random_numbers_for(integer) :: String.t | nil
   defp get_random_numbers_for(num_possibilities) do
     needed = numbers_needed_to_get_possibilities(num_possibilities)
     if needed > 0 do
@@ -94,6 +97,7 @@ defmodule AnonymousNameGenerator do
     end
   end
 
+  @spec numbers_needed_to_get_possibilities(integer) :: integer
   defp numbers_needed_to_get_possibilities(num) when num <= @default_num_possibilities, do: 0
   defp numbers_needed_to_get_possibilities(num) do
     :math.log10(num / @default_num_possibilities) 
@@ -101,6 +105,7 @@ defmodule AnonymousNameGenerator do
     |> trunc
   end
 
+  @spec get_consistent_numbers_for(integer, integer, integer) :: String.t
   defp get_consistent_numbers_for(a, b, num_possibilities) do
     nums_needed = numbers_needed_to_get_possibilities(num_possibilities)
     a_binary = Integer.to_string(a, 2) |> String.pad_leading(8, "0")
@@ -109,6 +114,7 @@ defmodule AnonymousNameGenerator do
     create_n_numbers_from_binary(binary, nums_needed)
   end
 
+  @spec get_binary_string_to_create_n_numbers(String.t, integer) :: String.t
   defp get_binary_string_to_create_n_numbers(binary, num) do
     str_len = num * 5
     bin_len = binary |> String.length
@@ -117,6 +123,7 @@ defmodule AnonymousNameGenerator do
     |> String.duplicate(dup_times)
   end
 
+  @spec create_n_numbers_from_binary(String.t, integer) :: String.t
   defp create_n_numbers_from_binary(binary, num) do
     binary
     |> String.codepoints
