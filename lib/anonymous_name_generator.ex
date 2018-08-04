@@ -6,20 +6,28 @@ defmodule AnonymousNameGenerator do
 
     If you need more variation, you can generate names likes "pungent-slime-1234"
 
-    It can also create consistent/consistent names if you pass in integers
+    It can also create consistent names if you pass in integers
 
-    user = %User{id: 341, timestamp: 1530244444}
-    ex. #{__MODULE__}.generate_consistent(user.id, user.timestamp)
-    This will always give the same result.
+    Example. This will always return `"interesting-emu"`
+
+        user = %User{id: 341, timestamp: 1530244444}
+        generate_consistent(user.id, user.timestamp)
+        => "interesting-emu"
+        generate_consistent(user.id, user.timestamp)
+        => "interesting-emu"
   """
   @adjectives AnonymousNameGenerator.Adjective.adjectives
   @adjective_count @adjectives |> length
+  @doc false
   def adjectives, do: @adjectives
+  @doc false
   def adjective_count, do: @adjective_count
   
   @nouns AnonymousNameGenerator.Noun.nouns
   @noun_count @nouns |> length
+  @doc false
   def nouns, do: @nouns
+  @doc false
   def noun_count, do: @noun_count
   
   @default_num_possibilities @adjective_count * @noun_count
@@ -27,13 +35,15 @@ defmodule AnonymousNameGenerator do
   @doc """
     This will create a new unique name on each call.
     By default, the number of possibilities are:
-    num of adjectives multiplied by the num of nouns
-    
-    Adjectives: #{@adjective_count} * Nouns: #{@noun_count} =~ #{@adjective_count * @noun_count}
+    number of adjectives(#{@adjective_count}) multiplied by the number of nouns(#{@noun_count}) = #{@adjective_count * @noun_count}
 
-    Passing a param will add a number of more possibilities are needed.
+    Passing a param will add a number if more possibilities are needed.
 
-    generate_random(1_000_000) = adj-noun-12
+        generate_random()
+        => "cheery-pond"
+        generate_random(1_000_000)
+        => "spicy-snowflake-5"
+        
   """
   def generate_random(num_possibilities \\ nil)
   def generate_random(nil) do
@@ -50,9 +60,18 @@ defmodule AnonymousNameGenerator do
   end
 
   @doc """
-    This will always return the same result if the same params are passed.
-    This can be used for giving the same name to a user
-    For example __MODULE__.generate_consistent(user.id, user.inserted_at_unix_timestamp))
+    This will always return the same result if the same params are passed.\n
+    This can be used for always giving the same name to a user. 
+    For example `generate_consistent(user.id, user.inserted_at_unix_timestamp))`
+
+        generate_consistent(1, 2)
+        => "damaged-quill"
+        generate_consistent(1, 2)
+        => "damaged-quill"
+        generate_consistent(10, 11, 2_000_000)
+        => "hidden-ghost-18"
+        generate_consistent(10, 11, 2_000_000)
+        => "hidden-ghost-18"
   """
   def generate_consistent(a, b, num_possibilities \\ nil)
   def generate_consistent(a, b, nil) when is_integer(a) and is_integer(b) do
@@ -66,7 +85,7 @@ defmodule AnonymousNameGenerator do
     prefix <> "-" <> suffix
   end
 
-  def get_random_numbers_for(num_possibilities) do
+  defp get_random_numbers_for(num_possibilities) do
     needed = numbers_needed_to_get_possibilities(num_possibilities)
     if needed > 0 do
       1..numbers_needed_to_get_possibilities(num_possibilities)
@@ -75,14 +94,14 @@ defmodule AnonymousNameGenerator do
     end
   end
 
-  def numbers_needed_to_get_possibilities(num) when num <= @default_num_possibilities, do: 0
-  def numbers_needed_to_get_possibilities(num) do
+  defp numbers_needed_to_get_possibilities(num) when num <= @default_num_possibilities, do: 0
+  defp numbers_needed_to_get_possibilities(num) do
     :math.log10(num / @default_num_possibilities) 
     |> Float.ceil
     |> trunc
   end
 
-  def get_consistent_numbers_for(a, b, num_possibilities) do
+  defp get_consistent_numbers_for(a, b, num_possibilities) do
     nums_needed = numbers_needed_to_get_possibilities(num_possibilities)
     a_binary = Integer.to_string(a, 2) |> String.pad_leading(8, "0")
     b_binary = Integer.to_string(b, 2) |> String.pad_leading(8, "0")
@@ -90,7 +109,7 @@ defmodule AnonymousNameGenerator do
     create_n_numbers_from_binary(binary, nums_needed)
   end
 
-  def get_binary_string_to_create_n_numbers(binary, num) do
+  defp get_binary_string_to_create_n_numbers(binary, num) do
     str_len = num * 5
     bin_len = binary |> String.length
     dup_times = (str_len / bin_len) |> Float.ceil |> trunc
@@ -98,7 +117,7 @@ defmodule AnonymousNameGenerator do
     |> String.duplicate(dup_times)
   end
 
-  def create_n_numbers_from_binary(binary, num) do
+  defp create_n_numbers_from_binary(binary, num) do
     binary
     |> String.codepoints
     |> Enum.chunk(5)

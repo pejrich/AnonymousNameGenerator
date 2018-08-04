@@ -1,6 +1,6 @@
 # AnonymousNameGenerator
 
-**TODO: Add description**
+Create Heroku-like names randomly, or consistently (based on inputs).
 
 ## Installation
 
