@@ -22,7 +22,6 @@ defmodule AnonymousNameGenerator.MixProject do
       ]
     ]
   end
-end
 
   # Run "mix help compile.app" to learn about applications.
   def application do
