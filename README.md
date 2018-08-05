@@ -26,7 +26,7 @@ These are used to generate a random name. The default number of possibilities is
 generate_random()
 => "slushy-billboard"
 generate_random()
-=> "slushy-billboard"
+=> "clumsy-lamb"
 generate_random(100_000)
 => "weak-jewel"
 generate_random(1_000_000_000)
