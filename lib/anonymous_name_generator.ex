@@ -48,8 +48,8 @@ defmodule AnonymousNameGenerator do
   @spec generate_random(integer | nil) :: String.t
   def generate_random(num_possibilities \\ nil)
   def generate_random(nil) do
-    adj = Enum.random(@adjectives)
-    noun = Enum.random(@nouns)
+    adj = Enum.at(@adjectives, :rand.uniform(@adjective_count) - 1)
+    noun = Enum.at(@nouns, :rand.uniform(@noun_count) - 1)
     adj <> "-" <> noun
   end
   def generate_random(num_possibilities) when is_integer(num_possibilities) do
