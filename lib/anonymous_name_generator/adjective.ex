@@ -1,6 +1,6 @@
 defmodule AnonymousNameGenerator.Adjective do
   @moduledoc false
-  @adjectives [
+  @adjectives {
     "abandoned", "acidic", "acrobatic", "adorable", "affectionate", "aged", 
     "aggressive", "agile", "alert", "ambitious", "ancient", "angry", "anxious", 
     "aromatic", "artistic", "ashamed", "attractive", "autumn", "aware", "awful", 
@@ -43,6 +43,6 @@ defmodule AnonymousNameGenerator.Adjective do
     "uptight", "vast", "victorious", "wandering", "warm", "weak", "weathered", 
     "wet", "white", "wild", "winter", "wispy", "withered", "witty", "wonderful", 
     "worried", "young", "yummy", "zealous"
-  ]
+  }
   def adjectives, do: @adjectives
 end

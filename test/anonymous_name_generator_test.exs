@@ -48,8 +48,8 @@ defmodule AnonymousNameGeneratorTest do
   end
 
   defp default_num_possibilities do
-    adjectives = ANG.Adjective.adjectives |> length
-    nouns = ANG.Noun.nouns |> length
+    adjectives = ANG.Adjective.adjectives |> tuple_size
+    nouns = ANG.Noun.nouns |> tuple_size
     adjectives * nouns
   end
 end

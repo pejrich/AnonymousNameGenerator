@@ -17,14 +17,14 @@ defmodule AnonymousNameGenerator do
         => "interesting-emu"
   """
   @adjectives AnonymousNameGenerator.Adjective.adjectives
-  @adjective_count @adjectives |> length
+  @adjective_count @adjectives |> tuple_size
   @doc false
   def adjectives, do: @adjectives
   @doc false
   def adjective_count, do: @adjective_count
   
   @nouns AnonymousNameGenerator.Noun.nouns
-  @noun_count @nouns |> length
+  @noun_count @nouns |> tuple_size
   @doc false
   def nouns, do: @nouns
   @doc false
@@ -48,8 +48,8 @@ defmodule AnonymousNameGenerator do
   @spec generate_random(integer | nil) :: String.t
   def generate_random(num_possibilities \\ nil)
   def generate_random(nil) do
-    adj = Enum.at(@adjectives, :rand.uniform(@adjective_count) - 1)
-    noun = Enum.at(@nouns, :rand.uniform(@noun_count) - 1)
+    adj = elem(@adjectives, :rand.uniform(@adjective_count) - 1)
+    noun = elem(@nouns, :rand.uniform(@noun_count) - 1)
     adj <> "-" <> noun
   end
   def generate_random(num_possibilities) when is_integer(num_possibilities) do
@@ -77,8 +77,8 @@ defmodule AnonymousNameGenerator do
   @spec generate_consistent(integer, integer, integer | nil) :: String.t
   def generate_consistent(a, b, num_possibilities \\ nil)
   def generate_consistent(a, b, nil) when is_integer(a) and is_integer(b) do
-    adj = Enum.at(@adjectives, :erlang.phash2(a, @adjective_count))
-    noun = Enum.at(@nouns, :erlang.phash2(b, @noun_count))
+    adj = elem(@adjectives, :erlang.phash2(a, @adjective_count))
+    noun = elem(@nouns, :erlang.phash2(b, @noun_count))
     adj <> "-" <> noun
   end
   def generate_consistent(a, b, num) when is_integer(a) and is_integer(b) do

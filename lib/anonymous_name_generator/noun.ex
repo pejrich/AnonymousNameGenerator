@@ -1,6 +1,6 @@
 defmodule AnonymousNameGenerator.Noun do
   @moduledoc false
-  @nouns [
+  @nouns {
     "aardvark", "afternoon", "airplane", "albatross", "alcove", "alligator",
     "alpaca", "anesthesiologist", "ankle", "anklet", "ant", "anteater", "antelope",
     "apartment", "ape", "apology", "apparatus", "apple", "appliance", "apron",
@@ -22,7 +22,7 @@ defmodule AnonymousNameGenerator.Noun do
     "emu", "eye", "fan", "feather", "fedora", "field", "finger", "fire",
     "firefly", "fireman", "fireplace", "fish", "flower", "fog", "foot", "forest",
     "fortress", "fountain", "fox", "frog", "frost", "furnace", "galaxy", "gallery",
-    "garage", "garden", "gate", "gauntlet", "gauva", "gazebo", "gazelle", "geese",
+    "garage", "garden", "gate", "gauntlet", "guava", "gazebo", "gazelle", "geese",
     "gem", "gerbil", "ghost", "giraffe", "glade", "glitter", "glockenspiel",
     "glove", "goat", "goldfish", "goose", "gorilla", "grape", "grass",
     "grasshopper", "greenhouse", "hacienda", "hallway", "hamster", "hat", "hawk",
@@ -63,6 +63,6 @@ defmodule AnonymousNameGenerator.Noun do
     "vulture", "wallaby", "wallet", "wasp", "watch", "water", "waterfall", "wave",
     "weasel", "whale", "wildflower", "wind", "window", "witch", "wolf", "wombat",
     "wood", "worm", "wrist", "yard", "zebra"
-  ]
+  }
   def nouns, do: @nouns
 end
