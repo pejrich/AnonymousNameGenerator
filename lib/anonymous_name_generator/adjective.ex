@@ -1,4 +1,5 @@
 defmodule AnonymousNameGenerator.Adjective do
+  @moduledoc false
   @adjectives [
     "abandoned", "acidic", "acrobatic", "adorable", "affectionate", "aged", 
     "aggressive", "agile", "alert", "ambitious", "ancient", "angry", "anxious", 

@@ -5,3 +5,7 @@
 # v 0.1.1
 
 * sped up generate_random by using `:rand.uniform` instead of `Enum.random`
+
+# v 0.1.2
+
+* Added `@moduledoc false` to `noun.ex` and `adjective.ex`

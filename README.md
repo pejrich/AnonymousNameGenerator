@@ -9,7 +9,7 @@ Add `anonymous_name_generator` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:anonymous_name_generator, "~> 0.1.0"}
+    {:anonymous_name_generator, "~> 0.1.2"}
   ]
 end
 ```

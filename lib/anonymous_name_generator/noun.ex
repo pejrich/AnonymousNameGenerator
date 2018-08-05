@@ -1,4 +1,5 @@
 defmodule AnonymousNameGenerator.Noun do
+  @moduledoc false
   @nouns [
     "aardvark", "afternoon", "airplane", "albatross", "alcove", "alligator",
     "alpaca", "anesthesiologist", "ankle", "anklet", "ant", "anteater", "antelope",
